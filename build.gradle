@@ -1,0 +1,63 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.2'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+project.ext {
+    compileSdkVersion = 25
+
+    buildToolsVersion = '25.0.0'
+
+    minSdkVersion = 14
+
+    targetSdkVersion = 25
+
+    supportLibraryVersion = '25.3.1'
+
+    mosbyMvpVersion = '3.0.2'
+
+    rxBindingVersion = '2.0.0'
+
+    rxJavaVersion = '2.0.8'
+
+    rxAndroidVersion = '2.0.1'
+
+    retrolambdaVersion = '2.5.1'
+
+    retrofitVersion = '2.2.0'
+
+    okhttp3Version = '3.6.0'
+
+    autoValueVersion = '1.4.1'
+
+    autoValueGsonVersion = '0.4.6'
+
+    googleGsonVersion = '2.2.4'
+
+    timberVersion = '3.1.0'
+
+    picassoVersion = '2.5.2'
+
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
