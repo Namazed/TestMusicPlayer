@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TestMusicPlayer</string>
+    <string name="found_nothing">К сожалению, по вашему запросу мы ничего не нашли :(</string>
+    <string name="search_music_hint">Поиск музыки...</string>
 </resources>
