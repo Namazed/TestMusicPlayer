@@ -46,7 +46,7 @@ dependencies {
     compile "com.hannesdorfmann.mosby3:mvp:$rootProject.ext.mosbyMvpVersion"
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
     compile "com.squareup.retrofit2:converter-scalars:$rootProject.ext.retrofitVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp3Version"
     provided "com.google.auto.value:auto-value:$rootProject.ext.autoValueVersion"

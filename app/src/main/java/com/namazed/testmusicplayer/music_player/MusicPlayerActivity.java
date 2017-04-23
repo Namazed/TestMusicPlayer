@@ -1,4 +1,4 @@
-package com.namazed.testmusicplayer;
+package com.namazed.testmusicplayer.music_player;
 
 
 import android.support.annotation.NonNull;
