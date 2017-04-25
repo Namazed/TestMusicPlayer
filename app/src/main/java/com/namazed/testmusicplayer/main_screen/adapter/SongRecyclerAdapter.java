@@ -64,9 +64,14 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
     }
 
     public void setData(List<Song> listSongs) {
-        this.listSongs.clear();
-        this.listSongs.addAll(listSongs);
-        notifyDataSetChanged();
+        if (listSongs == null) {
+            this.listSongs.clear();
+            notifyDataSetChanged();
+        } else {
+            this.listSongs.clear();
+            this.listSongs.addAll(listSongs);
+            notifyDataSetChanged();
+        }
     }
 
     class SongViewHolder extends RecyclerView.ViewHolder {

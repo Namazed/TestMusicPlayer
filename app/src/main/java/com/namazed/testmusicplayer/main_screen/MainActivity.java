@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 import com.namazed.testmusicplayer.R;
 import com.namazed.testmusicplayer.TestMusicPlayerApplication;
 import com.namazed.testmusicplayer.api.models.Song;
@@ -25,6 +26,7 @@ import com.namazed.testmusicplayer.music_player.MusicPlayerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -67,7 +69,8 @@ public class MainActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         searchSongsEditText = (EditText) findViewById(R.id.edit_search);
-        disposable = getEditTextDisposable();
+        disposable = getEditTextDisposable().subscribe(textViewTextChangeEvent ->
+                getPresenter().loadListSongs(textViewTextChangeEvent.text().toString()));
 
         listSongsRecyclerView = (RecyclerView) findViewById(R.id.recycler_list_songs);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -80,13 +83,11 @@ public class MainActivity
     }
 
     @NonNull
-    private Disposable getEditTextDisposable() {
+    private Observable<TextViewTextChangeEvent> getEditTextDisposable() {
         return RxTextView.textChangeEvents(searchSongsEditText)
                 .filter(textViewTextChangeEvent ->
                         textViewTextChangeEvent.text().toString().trim().length() > 4)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(textViewTextChangeEvent ->
-                        getPresenter().loadListSongs(textViewTextChangeEvent.text().toString()));
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @NonNull
@@ -98,7 +99,8 @@ public class MainActivity
     @Override
     protected void onResume() {
         super.onResume();
-        disposable = getEditTextDisposable();
+        disposable = getEditTextDisposable().subscribe(textViewTextChangeEvent ->
+                getPresenter().loadListSongs(textViewTextChangeEvent.text().toString()));
     }
 
     @Override

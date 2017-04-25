@@ -34,6 +34,7 @@ public class MainPresenter
     public void loadListSongs(String query) {
         if (isViewAttached()) {
             getView().showProgress(true);
+            getView().showData(null);
         }
 
         serialDisposable.set(searchClient.getListSongs(query, MEDIA_TYPE)
