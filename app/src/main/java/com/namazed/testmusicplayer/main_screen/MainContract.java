@@ -3,6 +3,9 @@ package com.namazed.testmusicplayer.main_screen;
 
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+import com.namazed.testmusicplayer.api.models.Song;
+
+import java.util.List;
 
 public interface MainContract {
 
@@ -16,5 +19,7 @@ public interface MainContract {
         void showError();
 
         void showEmptyList(boolean isShow);
+
+        void showData(List<Song> listSongs);
     }
 }

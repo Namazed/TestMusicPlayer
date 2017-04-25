@@ -7,7 +7,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.SerialDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -17,7 +17,7 @@ public class MainPresenter
 
     private final static String MEDIA_TYPE = "music";
     public static final int LIST_SIZE_0 = 0;
-    private Disposable disposable;
+    private SerialDisposable serialDisposable;
     private final SearchClient searchClient;
 
     public MainPresenter(SearchClient searchClient) {
@@ -27,6 +27,7 @@ public class MainPresenter
     @Override
     public void attachView(MainContract.View view) {
         super.attachView(view);
+        serialDisposable = new SerialDisposable();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class MainPresenter
             getView().showProgress(true);
         }
 
-        disposable = searchClient.getListSongs(query, MEDIA_TYPE)
+        serialDisposable.set(searchClient.getListSongs(query, MEDIA_TYPE)
                 .retry((integer, throwable) ->
                         throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException)
                 .subscribeOn(Schedulers.io())
@@ -49,6 +50,7 @@ public class MainPresenter
                             // TODO: 23.04.2017 save state emptyList in ViewState for rotation screen
                         } else {
                             // TODO: 23.04.2017 will be call method showData in view
+                            getView().showData(listSongs.getListSongs());
                             Timber.d(String.valueOf(listSongs.getListSize()));
                             getView().showProgress(false);
                         }
@@ -65,14 +67,16 @@ public class MainPresenter
                         getView().showProgress(false);
                         getView().showError();
                     }
-                });
+                })
+        );
     }
 
     @Override
     public void detachView(boolean retainInstance) {
         super.detachView(retainInstance);
-        if (!disposable.isDisposed()) {
-            disposable.dispose();
+        if (!serialDisposable.isDisposed()) {
+            serialDisposable.dispose();
+            serialDisposable = null;
         }
     }
 }

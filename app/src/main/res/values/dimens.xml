@@ -3,5 +3,8 @@
     <dimen name="card_song_margin">10dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
+    <dimen name="image_background_song_width">100dp</dimen>
     <dimen name="image_background_song_height">100dp</dimen>
+    <dimen name="name_artist_margin_top">10dp</dimen>
+    <dimen name="name_artist_song_margin_left">20dp</dimen>
 </resources>

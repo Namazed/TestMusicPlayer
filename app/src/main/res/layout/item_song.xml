@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:id="@+id/theme_card"
+    android:id="@+id/card_song"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,23 +17,31 @@
 
         <ImageView
             android:id="@+id/image_background_song"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/image_background_song_height"/>
+            android:layout_width="@dimen/image_background_song_width"
+            android:layout_height="@dimen/image_background_song_height"
+            android:contentDescription="@string/wrapper_album_songs"
+            />
 
         <TextView
             android:id="@+id/text_name_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/text_name_song"
+            android:layout_toRightOf="@id/image_background_song"
+            android:layout_toEndOf="@id/image_background_song"
+            android:layout_marginLeft="@dimen/name_artist_song_margin_left"
+            android:layout_marginStart="@dimen/name_artist_song_margin_left"
+            android:layout_marginTop="@dimen/name_artist_margin_top"
             tools:text="Little"/>
 
         <TextView
             android:id="@+id/text_name_song"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@id/text_name_artist"
+            android:layout_marginLeft="@dimen/name_artist_song_margin_left"
+            android:layout_marginStart="@dimen/name_artist_song_margin_left"
+            android:layout_toRightOf="@id/image_background_song"
+            android:layout_toEndOf="@id/image_background_song"
             tools:text="big Planet"/>
     </RelativeLayout>
 

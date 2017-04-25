@@ -19,7 +19,7 @@ public abstract class Song {
 
     @Nullable
     @SerializedName("trackName")
-    public abstract String getTrackName();
+    public abstract String getSongName();
 
     @Nullable
     @SerializedName("artworkUrl60")
