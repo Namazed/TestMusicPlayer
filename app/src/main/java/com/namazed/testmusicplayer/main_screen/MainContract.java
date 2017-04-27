@@ -11,6 +11,8 @@ public interface MainContract {
 
     interface Presenter extends MvpPresenter<MainContract.View> {
         void loadListSongs(String query);
+
+        void putDataOfSongInMap(Song song);
     }
 
     interface View extends MvpView {
@@ -21,5 +23,7 @@ public interface MainContract {
         void showEmptyList(boolean isShow);
 
         void showData(List<Song> listSongs);
+
+        void showPlayer(String mapDataOfSong);
     }
 }

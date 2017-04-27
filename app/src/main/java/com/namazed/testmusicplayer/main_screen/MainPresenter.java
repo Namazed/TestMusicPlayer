@@ -1,10 +1,15 @@
 package com.namazed.testmusicplayer.main_screen;
 
+import com.google.gson.Gson;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+import com.namazed.testmusicplayer.TestMusicPlayerApplication;
 import com.namazed.testmusicplayer.api.SearchClient;
+import com.namazed.testmusicplayer.api.models.Song;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.SerialDisposable;
@@ -70,6 +75,23 @@ public class MainPresenter
                     }
                 })
         );
+    }
+
+    @Override
+    public void putDataOfSongInMap(Song song) {
+        if (!isViewAttached()) {
+            return;
+        }
+
+        Map<String, String> mapDataOfSong = new LinkedHashMap<>();
+        mapDataOfSong.put(TestMusicPlayerApplication.NAME_ARTIST, song.getArtistName());
+        mapDataOfSong.put(TestMusicPlayerApplication.NAME_SONG, song.getSongName());
+        mapDataOfSong.put(TestMusicPlayerApplication.URL_IMAGE, song.getArtworkUrl100());
+        mapDataOfSong.put(TestMusicPlayerApplication.URL_SONG, song.getPreviewUrl());
+        Gson gson = new Gson();
+        String mapJson = gson.toJson(mapDataOfSong);
+
+        getView().showPlayer(mapJson);
     }
 
     @Override

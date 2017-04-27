@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">TestMusicPlayer</string>
     <string name="found_nothing">К сожалению, по вашему запросу мы ничего не нашли :(</string>
-    <string name="search_music_hint">Поиск музыки...</string>
+    <string name="search_music_hint">Поиск музыки…</string>
     <string name="error_connect_msg">Возникли проблемы с интернет-соединением. Попробуйте снова</string>
     <string name="wrapper_album_songs">Обложка альбома</string>
+    <string name="play">Кнопка play</string>
+    <string name="pause">Кнопка pause</string>
+    <string name="stop">Кнопка stop</string>
+    <string name="error_msg_problem_with_playing">Возникли проблемы с воспроизведением трека</string>
 </resources>

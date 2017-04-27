@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
@@ -32,8 +31,6 @@ import io.reactivex.disposables.Disposable;
 
 public class MainActivity
         extends MvpActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
-
-    public static final String EXTRA_SONG = "com.namazed.testmusicplayer.main_screen.MESSAGE";
 
     private Toolbar toolbar;
     private EditText searchSongsEditText;
@@ -54,13 +51,7 @@ public class MainActivity
     }
 
     private void initAdapterAndSongListener() {
-        songAdapterListener = (view, song) -> {
-            Intent intent = new Intent(this, MusicPlayerActivity.class);
-            Gson gson = new Gson();
-            String songString = gson.toJson(song);
-            intent.putExtra("com.namazed.testmusicplayer.main_screen.SONG", songString);
-            startActivity(intent);
-        };
+        songAdapterListener = (view, song) -> getPresenter().putDataOfSongInMap(song);
         adapter = new SongRecyclerAdapter(getApplication(), new ArrayList<>(), songAdapterListener);
         listSongsRecyclerView.setAdapter(adapter);
     }
@@ -151,5 +142,12 @@ public class MainActivity
         if (adapter != null) {
             adapter.setData(listSongs);
         }
+    }
+
+    @Override
+    public void showPlayer(String mapDataOfSong) {
+        Intent intent = new Intent(this, MusicPlayerActivity.class);
+        intent.putExtra(TestMusicPlayerApplication.EXTRA_MAP_DATA_OF_SONG, mapDataOfSong);
+        startActivity(intent);
     }
 }

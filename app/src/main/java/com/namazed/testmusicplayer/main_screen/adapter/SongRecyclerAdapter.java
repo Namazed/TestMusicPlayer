@@ -82,7 +82,7 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
 
         public SongViewHolder(CardView itemView) {
             super(itemView);
-            backgroundSongImageView = (ImageView) itemView.findViewById(R.id.image_background_song);
+            backgroundSongImageView = (ImageView) itemView.findViewById(R.id.image_wrapper_album);
             nameArtistTextView = (TextView) itemView.findViewById(R.id.text_name_artist);
             nameSongTextView = (TextView) itemView.findViewById(R.id.text_name_song);
         }

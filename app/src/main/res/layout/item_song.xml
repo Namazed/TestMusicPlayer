@@ -16,9 +16,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_background_song"
-            android:layout_width="@dimen/image_background_song_width"
-            android:layout_height="@dimen/image_background_song_height"
+            android:id="@+id/image_wrapper_album"
+            android:layout_width="@dimen/image_wrapper_album_songs_width"
+            android:layout_height="@dimen/image_wrapper_album_songs_height"
             android:contentDescription="@string/wrapper_album_songs"
             />
 
@@ -26,8 +26,8 @@
             android:id="@+id/text_name_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/image_background_song"
-            android:layout_toEndOf="@id/image_background_song"
+            android:layout_toRightOf="@id/image_wrapper_album"
+            android:layout_toEndOf="@id/image_wrapper_album"
             android:layout_marginLeft="@dimen/name_artist_song_margin_left"
             android:layout_marginStart="@dimen/name_artist_song_margin_left"
             android:layout_marginTop="@dimen/name_artist_margin_top"
@@ -40,8 +40,8 @@
             android:layout_below="@id/text_name_artist"
             android:layout_marginLeft="@dimen/name_artist_song_margin_left"
             android:layout_marginStart="@dimen/name_artist_song_margin_left"
-            android:layout_toRightOf="@id/image_background_song"
-            android:layout_toEndOf="@id/image_background_song"
+            android:layout_toRightOf="@id/image_wrapper_album"
+            android:layout_toEndOf="@id/image_wrapper_album"
             tools:text="big Planet"/>
     </RelativeLayout>
 
