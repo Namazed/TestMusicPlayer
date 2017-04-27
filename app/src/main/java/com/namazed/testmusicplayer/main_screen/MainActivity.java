@@ -1,13 +1,16 @@
 package com.namazed.testmusicplayer.main_screen;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -32,7 +35,6 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity
         extends MvpActivity<MainContract.View, MainContract.Presenter> implements MainContract.View {
 
-    private Toolbar toolbar;
     private EditText searchSongsEditText;
     private RecyclerView listSongsRecyclerView;
     private ProgressBar searchingProgressBar;
@@ -40,6 +42,7 @@ public class MainActivity
     private Disposable disposable;
     private SongRecyclerAdapter.SongAdapterListener songAdapterListener;
     private SongRecyclerAdapter adapter;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,6 @@ public class MainActivity
     }
 
     private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         searchSongsEditText = (EditText) findViewById(R.id.edit_search);
         disposable = getEditTextDisposable().subscribe(textViewTextChangeEvent ->
                 getPresenter().loadListSongs(textViewTextChangeEvent.text().toString()));
@@ -111,6 +112,40 @@ public class MainActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        this.menu = menu;
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_grid_view:
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
+                    listSongsRecyclerView.setLayoutManager(layoutManager);
+                    showGridViewMenuItem(false);
+                } else {
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+                    listSongsRecyclerView.setLayoutManager(layoutManager);
+                    showGridViewMenuItem(false);
+                }
+                adapter.setGridViewType(true);
+                return true;
+            case R.id.action_list_view:
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+                listSongsRecyclerView.setLayoutManager(layoutManager);
+                showGridViewMenuItem(true);
+                adapter.setGridViewType(false);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
             searchingProgressBar.setVisibility(View.VISIBLE);
@@ -149,5 +184,17 @@ public class MainActivity
         Intent intent = new Intent(this, MusicPlayerActivity.class);
         intent.putExtra(TestMusicPlayerApplication.EXTRA_MAP_DATA_OF_SONG, mapDataOfSong);
         startActivity(intent);
+    }
+
+    private void showGridViewMenuItem(boolean isShow) {
+        MenuItem gridViewItem = menu.findItem(R.id.action_grid_view);
+        MenuItem listViewItem = menu.findItem(R.id.action_list_view);
+        if (isShow) {
+            gridViewItem.setVisible(true);
+            listViewItem.setVisible(false);
+        } else {
+            gridViewItem.setVisible(false);
+            listViewItem.setVisible(true);
+        }
     }
 }

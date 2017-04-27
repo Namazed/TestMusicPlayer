@@ -23,6 +23,7 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
     private final SongAdapterListener songAdapterListener;
     private final Picasso picasso;
     private List<Song> listSongs;
+    private boolean isGridView;
 
     public interface SongAdapterListener {
         void songClickListener(View view, Song song);
@@ -37,8 +38,14 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
 
     @Override
     public SongViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_song, parent, false);
+        View itemView;
+        if (viewType == 0) {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_song, parent, false);
+        } else {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_song_grid_view, parent, false);
+        }
 
         return new SongViewHolder((CardView) itemView);
     }
@@ -61,6 +68,16 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
     @Override
     public int getItemCount() {
         return listSongs.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (isGridView ? 1 : 0);
+    }
+
+    public void setGridViewType(boolean isGridView) {
+        this.isGridView = isGridView;
+        notifyDataSetChanged();
     }
 
     public void setData(List<Song> listSongs) {

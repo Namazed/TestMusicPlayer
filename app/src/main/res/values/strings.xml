@@ -8,4 +8,6 @@
     <string name="pause">Кнопка pause</string>
     <string name="stop">Кнопка stop</string>
     <string name="error_msg_problem_with_playing">Возникли проблемы с воспроизведением трека</string>
+    <string name="action_grid_view">Сетка</string>
+    <string name="action_list_view">Список</string>
 </resources>

@@ -42,7 +42,7 @@
         android:layout_toLeftOf="@+id/button_play"
         android:layout_toStartOf="@+id/button_play"
         android:contentDescription="@string/stop"
-        android:src="@drawable/ic_stop_black_24dp"/>
+        android:src="@drawable/ic_stop_24dp"/>
 
     <ImageButton
         android:id="@+id/button_play"
@@ -55,7 +55,7 @@
         android:layout_marginRight="@dimen/play_btn_margin_left_right"
         android:layout_marginStart="@dimen/play_btn_margin_left_right"
         android:contentDescription="@string/play"
-        android:src="@drawable/ic_play_arrow_black_24dp"/>
+        android:src="@drawable/ic_play_arrow_24dp"/>
 
     <ImageButton
         android:id="@+id/button_pause"
@@ -65,6 +65,6 @@
         android:layout_toEndOf="@id/button_play"
         android:layout_toRightOf="@id/button_play"
         android:contentDescription="@string/pause"
-        android:src="@drawable/ic_pause_black_24dp"/>
+        android:src="@drawable/ic_pause_24dp"/>
 
 </RelativeLayout>

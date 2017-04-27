@@ -3,10 +3,15 @@
     <dimen name="card_song_margin">10dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
+
     <dimen name="image_wrapper_album_songs_width">100dp</dimen>
     <dimen name="image_wrapper_album_songs_height">100dp</dimen>
+    <dimen name="image_wrapper_album_songs_width_grid_view">60dp</dimen>
+    <dimen name="image_wrapper_album_songs_height_grid_view">60dp</dimen>
+
     <dimen name="name_artist_margin_top">10dp</dimen>
     <dimen name="name_artist_song_margin_left">20dp</dimen>
     <dimen name="name_song_margin_bottom">20dp</dimen>
     <dimen name="play_btn_margin_left_right">8dp</dimen>
+    <dimen name="wrapper_name_artist_song_margin_left">2dp</dimen>
 </resources>
