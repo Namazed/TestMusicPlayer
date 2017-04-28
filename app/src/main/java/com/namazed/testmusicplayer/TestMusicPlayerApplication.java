@@ -17,7 +17,7 @@ public class TestMusicPlayerApplication extends Application {
     public static final String EXTRA_MAP_DATA_OF_SONG =
             "com.namazed.testmusicplayer.main_screen.MAP_DATA_OF_SONG";
 
-    public static final int TIMER_REPEAT_UPDATE_PROGRESS = 100;
+    public static final int TIMER_REPEAT = 100;
 
     private RetrofitService retrofitService;
     private SearchClient searchClient;

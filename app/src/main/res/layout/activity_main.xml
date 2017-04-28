@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     tools:context="com.namazed.testmusicplayer.main_screen.MainActivity">
 
@@ -26,7 +27,7 @@
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
                 android:maxLines="1"
-                />
+                tools:targetApi="lollipop"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

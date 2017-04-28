@@ -12,6 +12,7 @@ public interface MainContract {
     interface Presenter extends MvpPresenter<MainContract.View> {
         void loadListSongs(String query);
 
+        //choose some datum of song and this put in map
         void putDataOfSongInMap(Song song);
     }
 
@@ -20,10 +21,17 @@ public interface MainContract {
 
         void showError();
 
+        //show when nothing is found
         void showEmptyList(boolean isShow);
 
         void showData(List<Song> listSongs);
 
+        //show activity player
         void showPlayer(String mapDataOfSong);
+
+        //show grid layout items sound recyclerView
+        void showGridView();
+
+        void showListView();
     }
 }

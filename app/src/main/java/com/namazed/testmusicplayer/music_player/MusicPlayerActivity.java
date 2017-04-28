@@ -256,7 +256,7 @@ public class MusicPlayerActivity
 
     private void updateProgressSong() {
         progressSongHandler.postDelayed(updateProgressBar, TimeUnit.MILLISECONDS.toMillis(
-                TestMusicPlayerApplication.TIMER_REPEAT_UPDATE_PROGRESS
+                TestMusicPlayerApplication.TIMER_REPEAT
         ));
     }
 
@@ -268,7 +268,7 @@ public class MusicPlayerActivity
             }
 
             progressSongHandler.postDelayed(this, TimeUnit.MILLISECONDS.toMillis(
-                    TestMusicPlayerApplication.TIMER_REPEAT_UPDATE_PROGRESS
+                    TestMusicPlayerApplication.TIMER_REPEAT
             ));
         }
     };

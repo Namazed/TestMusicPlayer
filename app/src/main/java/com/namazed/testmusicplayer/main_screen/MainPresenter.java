@@ -39,6 +39,7 @@ public class MainPresenter
     public void loadListSongs(String query) {
         if (isViewAttached()) {
             getView().showProgress(true);
+            getView().showEmptyList(false);
             getView().showData(null);
         }
 
@@ -59,6 +60,7 @@ public class MainPresenter
                             getView().showData(listSongs.getListSongs());
                             Timber.d(String.valueOf(listSongs.getListSize()));
                             getView().showProgress(false);
+                            getView().showEmptyList(false);
                         }
                     } else if (listSongs != null && listSongs.getListSize() == null && isViewAttached()) {
                         Timber.w("Bad answer loadListSongs: %s", listSongs.getErrorMessage());
