@@ -18,6 +18,7 @@ public class TestMusicPlayerApplication extends Application {
             "com.namazed.testmusicplayer.main_screen.MAP_DATA_OF_SONG";
 
     public static final int TIMER_REPEAT = 100;
+    public static final int TIMER_DEBOUNCE = 1000;
 
     private RetrofitService retrofitService;
     private SearchClient searchClient;

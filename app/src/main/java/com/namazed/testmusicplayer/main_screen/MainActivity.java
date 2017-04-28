@@ -225,6 +225,7 @@ public class MainActivity
         return RxTextView.textChangeEvents(searchSongsEditText)
                 .filter(textViewTextChangeEvent ->
                         textViewTextChangeEvent.text().toString().trim().length() > 4)
+                .debounce(TestMusicPlayerApplication.TIMER_DEBOUNCE, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
