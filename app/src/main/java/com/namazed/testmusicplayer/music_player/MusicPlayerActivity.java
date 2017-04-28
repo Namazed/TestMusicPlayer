@@ -15,7 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hannesdorfmann.mosby3.mvp.MvpActivity;
+import com.hannesdorfmann.mosby3.mvp.viewstate.MvpViewStateActivity;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.namazed.testmusicplayer.R;
 import com.namazed.testmusicplayer.TestMusicPlayerApplication;
@@ -29,7 +29,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class MusicPlayerActivity
-        extends MvpActivity<MusicPlayerContract.View, MusicPlayerContract.Presenter>
+        extends MvpViewStateActivity<
+        MusicPlayerContract.View, MusicPlayerContract.Presenter, MusicPlayerContract.ViewState>
         implements MusicPlayerContract.View {
 
     private Handler progressSongHandler = new Handler();
@@ -44,6 +45,7 @@ public class MusicPlayerActivity
     private CompositeDisposable compositeDisposable;
     private int durationSong;
     private ImageButton stopSongImageButton;
+    private String dataSourcePlayer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +63,6 @@ public class MusicPlayerActivity
         compositeDisposable = new CompositeDisposable();
         if (progressSongHandler == null) {
             progressSongHandler = new Handler();
-        }
-
-        if (mediaPlayer == null) {
-            getMapDataOfSong();
-        } else {
-            getPresenter().onClickPlay();
         }
     }
 
@@ -95,7 +91,8 @@ public class MusicPlayerActivity
             public void onStopTrackingTouch(SeekBar seekBar) {
                 progressSongHandler.removeCallbacks(updateProgressBar);
                 if (mediaPlayer != null) {
-                    mediaPlayer.seekTo(seekBar.getProgress());
+                    viewState.setProgressMusic(seekBar.getProgress());
+                    setProgressMusic(seekBar.getProgress());
                 }
 
                 updateProgressSong();
@@ -114,12 +111,11 @@ public class MusicPlayerActivity
                     }
                 })
         );
-
         compositeDisposable.add(RxView.clicks(playSongImageButton)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     if (mediaPlayer != null) {
-                        getPresenter().onClickPlay();
+                        getPresenter().onClickPlay(mediaPlayer.getCurrentPosition());
                     }
                 })
         );
@@ -127,10 +123,14 @@ public class MusicPlayerActivity
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     if (mediaPlayer != null) {
-                        getPresenter().onClickPause();
+                        getPresenter().onClickPause(mediaPlayer.getCurrentPosition());
                     }
                 })
         );
+    }
+
+    private void setProgressMusic(int progress) {
+        mediaPlayer.seekTo(progress);
     }
 
     @NonNull
@@ -212,10 +212,16 @@ public class MusicPlayerActivity
     @Override
     public void createPlayer(String previewUrl) {
         try {
+            dataSourcePlayer = previewUrl;
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(previewUrl);
             mediaPlayer.prepare();
+            durationSong = mediaPlayer.getDuration();
+            progressSongSeekBar.setMax(durationSong);
+            progressSongSeekBar.setProgress(mediaPlayer.getCurrentPosition());
+            pauseSongImageButton.setEnabled(false);
+            stopSongImageButton.setEnabled(false);
         } catch (IOException e) {
             Timber.d(e, e.getMessage());
             Toast.makeText(this, R.string.error_msg_problem_with_playing, Toast.LENGTH_SHORT).show();
@@ -224,6 +230,7 @@ public class MusicPlayerActivity
 
     @Override
     public void stopPlayer() {
+        viewState.setStateStop();
         mediaPlayer.stop();
         mediaPlayer = null;
         playSongImageButton.setEnabled(true);
@@ -234,10 +241,11 @@ public class MusicPlayerActivity
     }
 
     @Override
-    public void startPlayer() {
+    public void startPlayer(int progress) {
+        viewState.setStatePlay();
+        viewState.setDataSourcePlayer(dataSourcePlayer);
         mediaPlayer.start();
-        durationSong = mediaPlayer.getDuration();
-        progressSongSeekBar.setMax(durationSong);
+        setProgressMusic(progress);
         progressSongSeekBar.setProgress(mediaPlayer.getCurrentPosition());
         playSongImageButton.setEnabled(false);
         pauseSongImageButton.setEnabled(true);
@@ -247,7 +255,12 @@ public class MusicPlayerActivity
     }
 
     @Override
-    public void pausePlayer() {
+    public void pausePlayer(int progress) {
+        viewState.setStatePause();
+        viewState.setProgressMusic(progress);
+        viewState.setDataSourcePlayer(dataSourcePlayer);
+        progressSongSeekBar.setProgress(progress);
+        setProgressMusic(progress);
         mediaPlayer.pause();
         progressSongHandler.removeCallbacks(updateProgressBar);
         pauseSongImageButton.setEnabled(false);
@@ -260,10 +273,14 @@ public class MusicPlayerActivity
         ));
     }
 
+    /**
+     * Update progress seekBar from mediaPlayer currentPosition
+     */
     private Runnable updateProgressBar = new Runnable() {
         @Override
         public void run() {
             if (mediaPlayer != null) {
+                viewState.setProgressMusic(mediaPlayer.getCurrentPosition());
                 progressSongSeekBar.setProgress(mediaPlayer.getCurrentPosition());
             }
 
@@ -272,4 +289,15 @@ public class MusicPlayerActivity
             ));
         }
     };
+
+    @NonNull
+    @Override
+    public MusicPlayerContract.ViewState createViewState() {
+        return new MusicPlayerViewState();
+    }
+
+    @Override
+    public void onNewViewStateInstance() {
+        //don't need
+    }
 }

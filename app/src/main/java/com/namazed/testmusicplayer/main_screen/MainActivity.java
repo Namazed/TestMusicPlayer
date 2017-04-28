@@ -36,7 +36,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity
-        extends MvpViewStateActivity<MainContract.View, MainContract.Presenter, MainViewState>
+        extends MvpViewStateActivity<MainContract.View, MainContract.Presenter, MainContract.ViewState>
         implements MainContract.View {
 
     private Toolbar toolbar;
@@ -120,7 +120,7 @@ public class MainActivity
     @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            viewState.setShowLoading();
+            viewState.setStateShowLoading();
             searchingProgressBar.setVisibility(View.VISIBLE);
         } else {
             searchingProgressBar.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class MainActivity
 
     @Override
     public void showError() {
-        viewState.setShowError();
+        viewState.setStateShowError();
         View view = MainActivity.this.getCurrentFocus();
         if (view == null) {
             return;
@@ -140,7 +140,7 @@ public class MainActivity
     @Override
     public void showEmptyList(boolean isShow) {
         if (isShow) {
-            viewState.setShowEmptyList();
+            viewState.setStateShowEmptyList();
             emptyAnswerTextView.setVisibility(View.VISIBLE);
         } else {
             emptyAnswerTextView.setVisibility(View.GONE);
@@ -150,7 +150,7 @@ public class MainActivity
     @Override
     public void showData(List<Song> listSongs) {
         if (adapter != null) {
-            viewState.setShowListSong();
+            viewState.setStateShowListSong();
             adapter.setData(listSongs);
         }
     }
@@ -188,7 +188,7 @@ public class MainActivity
 
     @NonNull
     @Override
-    public MainViewState createViewState() {
+    public MainContract.ViewState createViewState() {
         return new MainViewState();
     }
 

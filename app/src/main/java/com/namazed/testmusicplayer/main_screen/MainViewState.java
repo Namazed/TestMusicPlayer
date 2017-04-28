@@ -5,8 +5,11 @@ import android.support.annotation.NonNull;
 
 import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 
+/**
+ * ViewState from Mosby library. Save state view.
+ */
 
-public class MainViewState implements RestorableViewState<MainContract.View> {
+public class MainViewState implements MainContract.ViewState {
 
     private static final String KEY_STATE_VIEW = "state_view";
     private static final String KEY_VIEW_TYPE = "state_view";
@@ -21,27 +24,33 @@ public class MainViewState implements RestorableViewState<MainContract.View> {
     private int state = STATE_SHOW_LIST_SONG;
     private int viewType = LIST_VIEW_TYPE;
 
-    void setShowListSong() {
+    @Override
+    public void setStateShowListSong() {
         state = STATE_SHOW_LIST_SONG;
     }
 
-    void setShowError() {
+    @Override
+    public void setStateShowError() {
         state = STATE_SHOW_ERROR;
     }
 
-    void setShowEmptyList() {
+    @Override
+    public void setStateShowEmptyList() {
         state = STATE_SHOW_EMPTY_LIST;
     }
 
-    void setShowLoading() {
+    @Override
+    public void setStateShowLoading() {
         state = STATE_SHOW_LOADING;
     }
 
-    void setGridViewType() {
+    @Override
+    public void setGridViewType() {
         viewType = GRID_VIEW_TYPE;
     }
 
-    void setListViewType() {
+    @Override
+    public void setListViewType() {
         viewType = LIST_VIEW_TYPE;
     }
 

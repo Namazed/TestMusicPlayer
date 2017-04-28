@@ -3,6 +3,7 @@ package com.namazed.testmusicplayer.main_screen;
 
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpView;
+import com.hannesdorfmann.mosby3.mvp.viewstate.RestorableViewState;
 import com.namazed.testmusicplayer.api.models.Song;
 
 import java.util.List;
@@ -33,5 +34,19 @@ public interface MainContract {
         void showGridView();
 
         void showListView();
+    }
+
+    interface ViewState extends RestorableViewState<MainContract.View> {
+        void setStateShowListSong();
+
+        void setStateShowError();
+
+        void setStateShowEmptyList();
+
+        void setStateShowLoading();
+
+        void setGridViewType();
+
+        void setListViewType();
     }
 }

@@ -9,6 +9,12 @@ import retrofit2.http.Query;
 
 public interface SearchClient {
 
+    /**
+     * Search music from itunes api search
+     * @param query - your request
+     * @param mediaType - music, video and etc
+     * @return list of songs
+     */
     @GET("search")
     Single<ListSongs> getListSongs(
             @Query("term") String query,

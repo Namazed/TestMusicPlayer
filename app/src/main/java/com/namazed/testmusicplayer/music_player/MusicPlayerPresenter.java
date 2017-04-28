@@ -23,7 +23,7 @@ public class MusicPlayerPresenter
         }
 
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        Type type = new TypeToken<Map<String, String>>() {}.getType();
         Map<String, String> mapDataOfSong = gson.fromJson(mapJson, type);
         for (Map.Entry<String, String> stringEntry : mapDataOfSong.entrySet()) {
             switch (stringEntry.getKey()) {
@@ -56,20 +56,20 @@ public class MusicPlayerPresenter
     }
 
     @Override
-    public void onClickPlay() {
+    public void onClickPlay(int currentPosition) {
         if (!isViewAttached()) {
             return;
         }
 
-        getView().startPlayer();
+        getView().startPlayer(currentPosition);
     }
 
     @Override
-    public void onClickPause() {
+    public void onClickPause(int currentPosition) {
         if (!isViewAttached()) {
             return;
         }
 
-        getView().pausePlayer();
+        getView().pausePlayer(currentPosition);
     }
 }
